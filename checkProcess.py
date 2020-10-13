@@ -1,9 +1,11 @@
 from psutil import process_iter
-from subprocess import check_output
 import psutil
 
 def getPid(name):
-    return int(check_output(["pidof","-s",name]))
+    for p in process_iter():
+        if p.name() == "nginx":
+            print("OK: nginx pid founded")
+            return p.pid
 
 def checkIfProcessRunning(processName):
     for proc in psutil.process_iter():
